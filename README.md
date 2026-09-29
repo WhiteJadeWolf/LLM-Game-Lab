@@ -1,0 +1,1 @@
+LLM-Game-Lab is a lightweight simulation engine designed to pit Large Language Models against classic Game Theory benchmarks. By wrapping LLMs into agents with memory and letting them play games like the Iterated Prisoner's Dilemma, this project tests whether AI behavior naturally aligns with theoretical predictions of cooperation, defection, and rationality.
