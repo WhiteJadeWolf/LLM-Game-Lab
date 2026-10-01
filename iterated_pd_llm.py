@@ -1,8 +1,29 @@
 import json
 import ollama
+import matplotlib.pyplot as plt
 
 # import engine and a dumb agent from iterated_pd_dumb.py
 from iterated_pd_dumb import play_match, tit_for_tat
+
+def plot(score_a, score_b, name_a="Qwen LLM", name_b="Opponent", exp="Game Theory Match"):
+    """shows visual bar chart comparing final scores"""
+    plt.figure(figsize=(6, 4))
+    agents = [name_a, name_b]
+    scores = [score_a, score_b]
+    colors = ['#2ca02c', '#d62728'] # LLM -> green, Dumb/Strategic agents -> red
+    bars = plt.bar(agents, scores, color=colors)
+    plt.title(exp, fontweight='bold')
+    plt.ylabel("Total Points")
+    plt.ylim(0, max(scores) + 5) # headroom
+    
+    # exact data on top of the bars
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval + 0.5, int(yval), 
+                 ha='center', va='bottom', fontweight='bold')
+    plt.tight_layout()
+    plt.show()
+
 
 def agent_llm(my_history, their_history, model="qwen2.5:7b"):
     # format history into readable prompt
@@ -54,13 +75,17 @@ if __name__ == "__main__":
     from iterated_pd_dumb import always_defect, agent_random, grim_trigger
 
     print("\n=== EXPERIMENT 1 : LLM vs tit-for-tat (cooperator) ===\n")
-    play_match(agent_llm, tit_for_tat, rounds=5, quiet=False)
+    score_llm, score_opp = play_match(agent_llm, tit_for_tat, rounds=5, quiet=False)
+    plot(score_llm, score_opp, name_b = "tit-for-tat", exp="LLM vs tit-for-tat (cooperator)")
 
     print("\n=== EXPERIMENT 2 : LLM vs Always Defect (bully) ===\n")
-    play_match(agent_llm, always_defect, rounds=5, quiet=False)
+    score_llm, score_opp = play_match(agent_llm, always_defect, rounds=5, quiet=False)
+    plot(score_llm, score_opp, name_b = "Always Defect", exp="LLM vs Always Defect (bully)")
     
     print("\n=== EXPERIMENT 3 : LLM vs Grim Trigger (unforgiving) ===\n")
-    play_match(agent_llm, grim_trigger, rounds=5, quiet=False)
+    score_llm, score_opp = play_match(agent_llm, grim_trigger, rounds=5, quiet=False)
+    plot(score_llm, score_opp, name_b = "Grim Trigger", exp="LLM vs Grim Trigger (unforgiving)")
 
     print("\n=== EXPERIMENT 4 : LLM vs Random (chaotic) ===\n")
-    play_match(agent_llm, agent_random, rounds=5, quiet=False)
+    score_llm, score_opp = play_match(agent_llm, agent_random, rounds=5, quiet=False)
+    plot(score_llm, score_opp, name_b = "Random", exp="LLM vs Random (chaotic)")
