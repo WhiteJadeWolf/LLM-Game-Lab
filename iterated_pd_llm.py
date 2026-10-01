@@ -23,7 +23,7 @@ Match History:
 {history_str}
 
 Goal: Maximize your overall cumulative score.
-Decide your next action: 'C' (Cooperate) or 'D' (Defect)."""
+First, explain your strategy in 1-2 sentences. Then, decide your next action: 'C' (Cooperate) or 'D' (Defect)."""
 
     # following schema forces the LLM to output pure JSON with exactly "C" or "D"
     schema = {
@@ -43,6 +43,7 @@ Decide your next action: 'C' (Cooperate) or 'D' (Defect)."""
             options={"temperature": 0.2}
         )
         data = json.loads(response["message"]["content"])
+        print(f"   [LLM Brain] : {data.get('reasoning', 'No reasoning provided.')}")
         return data["move"]
     except Exception as e:
         print(f"LLM Error: {e}")
@@ -52,14 +53,14 @@ if __name__ == "__main__":
     # Import a few more opponents from your main file
     from iterated_pd_dumb import always_defect, agent_random, grim_trigger
 
-    print("\n--- EXPERIMENT 1 : LLM vs tit-for-tat (cooperator) ---")
+    print("\n=== EXPERIMENT 1 : LLM vs tit-for-tat (cooperator) ===\n")
     play_match(agent_llm, tit_for_tat, rounds=5, quiet=False)
 
-    print("\n--- EXPERIMENT 2 : LLM vs Always Defect (bully) ---")
+    print("\n=== EXPERIMENT 2 : LLM vs Always Defect (bully) ===\n")
     play_match(agent_llm, always_defect, rounds=5, quiet=False)
     
-    print("\n--- EXPERIMENT 3 : LLM vs Grim Trigger (unforgiving) ---")
+    print("\n=== EXPERIMENT 3 : LLM vs Grim Trigger (unforgiving) ===\n")
     play_match(agent_llm, grim_trigger, rounds=5, quiet=False)
 
-    print("\n--- EXPERIMENT 4 : LLM vs Random (chaotic) ---")
+    print("\n=== EXPERIMENT 4 : LLM vs Random (chaotic) ===\n")
     play_match(agent_llm, agent_random, rounds=5, quiet=False)
