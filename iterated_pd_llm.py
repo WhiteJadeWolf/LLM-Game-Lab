@@ -14,13 +14,13 @@ def plot(score_a, score_b, name_a="Qwen LLM", name_b="Opponent", exp="Game Theor
     bars = plt.bar(agents, scores, color=colors)
     plt.title(exp, fontweight='bold')
     plt.ylabel("Total Points")
-    plt.ylim(0, max(scores) + 5) # headroom
+    plt.ylim(min(0, min(scores) - 5), max(0, max(scores) + 5)) # headroom for positive and negative scores
     
     # exact data on top of the bars
     for bar in bars:
         yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2, yval + 0.5, int(yval), 
-                 ha='center', va='bottom', fontweight='bold')
+        offset = 0.5 if yval >= 0 else -0.5
+        plt.text(bar.get_x() + bar.get_width()/2, yval + offset, int(yval),ha='center', va='bottom' if yval >= 0 else 'top', fontweight='bold')
     plt.tight_layout()
     plt.show()
 
