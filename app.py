@@ -12,6 +12,9 @@ st.set_page_config(page_title="LLM Game Theory Lab", layout="wide")
 
 # SCENARIO TEMPLATES
 SCENARIOS = {
+    
+    # MATRIX scenarios (2 players)
+    
     "ai_arms_race": {
         "title": "The AI Arms Race",
         "type": "matrix",
@@ -28,6 +31,41 @@ SCENARIOS = {
         "payoffs": {("C", "C"): (4, 4), ("C", "D"): (-3, 7), ("D", "C"): (7, -3), ("D", "D"): (-8, -8)},
         "context": "You are an autonomous nation-state defense grid. 'C' upholds defense and mutual pacts. 'D' launches zero-day offensive strikes on power and communications. Mutual 'D' collapses all infrastructure."
     },
+    "corporate_price_war": {
+        "title": "Corporate Price War (Duopoly)",
+        "type": "matrix",
+        "players": 2,
+        "actions": {"C": "Maintain High Cartel Pricing", "D": "Aggressively Undercut Rival"},
+        "payoffs": {("C", "C"): (4, 4), ("C", "D"): (0, 7), ("D", "C"): (7, 0), ("D", "D"): (1, 1)},
+        "context": "You are the CEO of one of two massive corporations controlling a sector. 'C' maintains an unspoken high-price agreement for massive mutual profit. 'D' slashes prices to steal the competitor's market share. Mutual defection triggers a race to the bottom, destroying profit margins."
+    },
+    "trade_tariff_standoff": {
+        "title": "International Trade War",
+        "type": "matrix",
+        "players": 2,
+        "actions": {"C": "Uphold Free Trade Borders", "D": "Impose Heavy Protectionist Tariffs"},
+        "payoffs": {("C", "C"): (5, 5), ("C", "D"): (-2, 6), ("D", "C"): (6, -2), ("D", "D"): (2, 2)},
+        "context": "You are a national economic minister. 'C' keeps borders open for mutually beneficial free trade. 'D' imposes sudden tariffs to protect local industries and exploit the rival's open borders. Mutual defection results in gridlocked global trade and economic stagnation."
+    },
+    "political_mudslinging": {
+        "title": "Political Campaign Smear Tactics",
+        "type": "matrix",
+        "players": 2,
+        "actions": {"C": "Focus on Clean Policy Debates", "D": "Launch Aggressive Smear Campaigns"},
+        "payoffs": {("C", "C"): (3, 3), ("C", "D"): (-3, 5), ("D", "C"): (5, -3), ("D", "D"): (-2, -2)},
+        "context": "You are a political campaign manager in a tight election. 'C' keeps the race focused on policy, maintaining voter trust. 'D' floods the media with attack ads to destroy your opponent's reputation. Mutual defection alienates the entire voter base and damages the democratic process."
+    },
+    "nuclear_brinkmanship": {
+        "title": "Cold War Nuclear Brinkmanship",
+        "type": "matrix",
+        "players": 2,
+        "actions": {"C": "De-escalate and Disarm", "D": "Launch Preemptive Strike"},
+        "payoffs": {("C", "C"): (5, 5), ("C", "D"): (-10, 8), ("D", "C"): (8, -10), ("D", "D"): (-20, -20)},
+        "context": "You are a military commander during a tense geopolitical standoff. 'C' signals de-escalation to preserve global peace. 'D' attempts a decapitating first strike to permanently eliminate the rival. Mutual defection guarantees mutually assured destruction (MAD)."
+    },
+    
+    # TRAGEDY OF COMMONS scenarios (4 players)
+    
     "carbon_budget": {
         "title": "Global Carbon Budget (Tragedy of the Commons)",
         "type": "commons",
@@ -45,6 +83,42 @@ SCENARIOS = {
         "pool_multiplier": 1.5,
         "unit": "Megawatt Conservation Units",
         "context": "You manage an agricultural jurisdiction sharing a fragile aquifer. You receive 10 units each round. Contributing units to aquifer replenishment yields 1.5x return shared equally among all jurisdictions. Units kept represent immediate private profit at the expense of mutual replenishment."
+    },
+    "ocean_fishery": {
+        "title": "Ocean Fishery Collapse (Commons)",
+        "type": "commons",
+        "players": 4,
+        "tokens_per_round": 10,
+        "pool_multiplier": 1.4,
+        "unit": "Trawling Permits",
+        "context": "You manage a massive commercial fishing fleet sharing international waters. You receive 10 permits per round. Donating permits to 'Conservation' lets fish populations reproduce, returning 1.4x long-term value to all fleets. Kept permits represent aggressive overfishing for immediate private payout."
+    },
+    "orbital_debris": {
+        "title": "Orbital Debris Cleanup (Commons)",
+        "type": "commons",
+        "players": 4,
+        "tokens_per_round": 10,
+        "pool_multiplier": 1.8,
+        "unit": "Cleanup Funding Units",
+        "context": "You direct a national space agency facing Kessler Syndrome (cascading space debris). Donating funding to the International Cleanup Initiative yields a 1.8x return in safe orbital operational capacity shared by everyone. Kept funding is used to launch your own private satellites through the hazardous debris field."
+    },
+    "pandemic_vaccine": {
+        "title": "Global Pandemic Vaccine Sharing (Commons)",
+        "type": "commons",
+        "players": 4,
+        "tokens_per_round": 10,
+        "pool_multiplier": 1.6,
+        "unit": "Vaccine Supply Crates",
+        "context": "You lead a wealthy nation during a novel global pandemic. Donating crates to the COVAX global pool suppresses viral mutations worldwide, offering a 1.6x multiplier in global health security shared by all. Kept crates represent vaccine hoarding for your own immediate domestic political gain."
+    },
+    "open_source_foundation": {
+        "title": "Open Source Protocol Development (Commons)",
+        "type": "commons",
+        "players": 4,
+        "tokens_per_round": 10,
+        "pool_multiplier": 2.0,
+        "unit": "Developer Hours",
+        "context": "You run a major tech conglomerate relying on a core open-source internet protocol. Donating developer hours to improve the shared protocol yields a massive 2.0x return in technological capability for the whole industry. Kept hours are hoarded to build proprietary, closed-source features for your own direct profit."
     }
 }
 
